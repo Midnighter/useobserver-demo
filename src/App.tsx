@@ -1,8 +1,8 @@
-import * as React from "react";
-import { useObserver } from "mobx-react-lite";
+import React from 'react';
+import { useObserver } from 'mobx-react-lite';
 // Project imports
-import "./styles.css";
-import { useRootStore, ICard, IItem } from "./store";
+import './styles.css';
+import { useRootStore, ICard, IItem } from './store';
 
 type ItemProps = {
   item: IItem;
@@ -21,7 +21,7 @@ type CardProps = {
 export const CardComponent: React.FC<CardProps> = ({ card }) => {
   return useObserver(() => {
     return (
-      <div className="card">
+      <div className='card'>
         <h2>{card.name}</h2>
         <ul>
           {card.items.map(item => (
@@ -37,7 +37,7 @@ export default function App() {
   const store = useRootStore();
   return useObserver(() => {
     return (
-      <div className="App">
+      <div className='App'>
         <button onClick={store.setRandomCardTitle}>Modify Card Title</button>
         <button onClick={store.setRandomListItem}>Modify List Item</button>
         {store.cards.map(card => (

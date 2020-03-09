@@ -1,6 +1,6 @@
-import * as React from "react";
-import { render } from "react-dom";
+import React from 'react';
+import { render } from 'react-dom';
 
-import TheRoot from "./TheRoot";
+import TheRoot from './TheRoot';
 
-render(<TheRoot />, document.getElementById("root"));
+render(<TheRoot />, document.getElementById('root'));

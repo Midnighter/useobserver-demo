@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { types, Instance } from 'mobx-state-tree';
 import { connectReduxDevtools } from 'mst-middlewares';
 import { useLocalStore } from 'mobx-react-lite';
-import * as faker from 'faker';
+import faker from 'faker';
 
 export const Item = types
   .model('Item', {
