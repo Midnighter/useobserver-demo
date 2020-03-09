@@ -1,10 +1,11 @@
-import * as React from "react";
-import { types, Instance } from "mobx-state-tree";
-import { useLocalStore } from "mobx-react-lite";
-import * as faker from "faker";
+import * as React from 'react';
+import { types, Instance } from 'mobx-state-tree';
+import { connectReduxDevtools } from 'mst-middlewares';
+import { useLocalStore } from 'mobx-react-lite';
+import * as faker from 'faker';
 
 export const Item = types
-  .model("Item", {
+  .model('Item', {
     id: types.identifier,
     name: types.string
   })
@@ -18,7 +19,7 @@ export const Item = types
 export interface IItem extends Instance<typeof Item> {}
 
 export const Card = types
-  .model("Card", {
+  .model('Card', {
     id: types.identifier,
     name: types.string,
     items: types.array(Item)
@@ -62,14 +63,20 @@ const initRootStore = (): RootStoreModel => {
   return RootStore.create({
     cards: [
       {
-        id: "1",
-        name: "First",
-        items: [{ id: "1-1", name: "Apple" }, { id: "1-2", name: "Oranges" }]
+        id: '1',
+        name: 'First',
+        items: [
+          { id: '1-1', name: 'Apple' },
+          { id: '1-2', name: 'Oranges' }
+        ]
       },
       {
-        id: "2",
-        name: "Second",
-        items: [{ id: "2-1", name: "Whisky" }, { id: "2-2", name: "Wine" }]
+        id: '2',
+        name: 'Second',
+        items: [
+          { id: '2-1', name: 'Whisky' },
+          { id: '2-2', name: 'Wine' }
+        ]
       }
     ]
   });
@@ -81,6 +88,9 @@ type Props = {
 
 export const RootStoreProvider: React.FC<Props> = ({ children }) => {
   const store = useLocalStore(initRootStore);
+  if (process.env.NODE_ENV === 'development') {
+    connectReduxDevtools(require('remotedev'), store);
+  }
   return (
     <RootStoreContext.Provider value={store}>
       {children}
@@ -91,7 +101,7 @@ export const RootStoreProvider: React.FC<Props> = ({ children }) => {
 export const useRootStore = () => {
   const store = React.useContext(RootStoreContext);
   if (!store) {
-    throw new Error("You have forgotten to use the RootStoreProvider.");
+    throw new Error('You have forgotten to use the RootStoreProvider.');
   }
   return store;
 };
