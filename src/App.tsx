@@ -38,8 +38,12 @@ export default function App() {
   return useObserver(() => {
     return (
       <div className='App'>
-        <button onClick={store.setRandomCardTitle}>Modify Card Title</button>
-        <button onClick={store.setRandomListItem}>Modify List Item</button>
+        <button onClick={() => store.setRandomCardTitle()}>
+          Modify Card Title
+        </button>
+        <button onClick={() => store.setRandomListItem()}>
+          Modify List Item
+        </button>
         {store.cards.map(card => (
           <CardComponent key={card.id} card={card} />
         ))}
