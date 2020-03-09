@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { useObserver } from "mobx-react-lite";
+// Project imports
+import "./styles.css";
+import { useRootStore, ICard, IItem } from "./store";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type ItemProps = {
+  item: IItem;
+};
+
+export const ItemComponent: React.FC<ItemProps> = ({ item }) => {
+  return useObserver(() => {
+    return <li>{item.name}</li>;
+  });
+};
+
+type CardProps = {
+  card: ICard;
+};
+
+export const CardComponent: React.FC<CardProps> = ({ card }) => {
+  return useObserver(() => {
+    return (
+      <div className="card">
+        <h2>{card.name}</h2>
+        <ul>
+          {card.items.map(item => (
+            <ItemComponent key={item.id} item={item} />
+          ))}
+        </ul>
+      </div>
+    );
+  });
+};
+
+export default function App() {
+  const store = useRootStore();
+  return useObserver(() => {
+    return (
+      <div className="App">
+        <button onClick={store.setRandomCardTitle}>Modify Card Title</button>
+        <button onClick={store.setRandomListItem}>Modify List Item</button>
+        {store.cards.map(card => (
+          <CardComponent key={card.id} card={card} />
+        ))}
+      </div>
+    );
+  });
 }
-
-export default App;
