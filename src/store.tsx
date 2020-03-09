@@ -44,12 +44,14 @@ const RootStore = types
   .actions(self => ({
     setRandomCardTitle() {
       const cardIndex = getRandomIndex(self.cards.length);
-      self.cards[cardIndex].setName(faker.name.findName());
+      self.cards[cardIndex].setName(faker.company.catchPhrase());
     },
     setRandomListItem() {
       const cardIndex = getRandomIndex(self.cards.length);
       const itemIndex = getRandomIndex(self.cards[cardIndex].items.length);
-      self.cards[cardIndex].items[itemIndex].setName(faker.name.findName());
+      self.cards[cardIndex].items[itemIndex].setName(
+        faker.commerce.productName()
+      );
     }
   }));
 
